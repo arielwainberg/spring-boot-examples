@@ -10,4 +10,15 @@ pipeline {
         }
       }   
     }
+    stage('Test-$version') {
+      steps {
+        echo 'Testing..'
+      }
+    }
+    stage('deploy-$version') {
+      steps {
+        echo 'Deploying....'
+      }
+    }
+  }
 }
