@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        dir('/home/devops/finalproject/spring-boot-examples/spring-boot-package-war') {
+        dir('spring-boot-package-war') {
             stage('Build-$version') {
                 steps {
                      sh "mvn -B versions:set -DnewVersion=${env.BUILD_NUMBER} && mvn clean package"
