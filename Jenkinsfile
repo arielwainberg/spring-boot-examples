@@ -2,7 +2,21 @@
 //    def matcher = readFile('pom.xml') =~ '<version>(\\d*)\\.(\\d*)\\.(\\d*)(-SNAPSHOT)*</version>'
 //    matcher ? matcher[0] : null
 //}
+def git
+def maven
+def scriptVersion='v3.0.0'
+fileLoader.withGit('https://git.aurora.skead.no/scm/ao/aurora-pipeline-scripts.git', scriptVersion) {
+    git = fileLoader.load('git/git')
+    maven = fileLoader.load('maven/maven')
+    utilities = fileLoader.load('utilities/utilities')
+}
 
+Map<String, Object> props = [:]
+deployProperties = "-P sign,build-extras"
+props.put('deployProperties', deployProperties)
+props.put('mavenSettingsFile', 'github-maven-settings')
+props.put('pomPath', 'pom.xml')
+props.put('credentialsId', 'github')
 pipeline {
   agent any
   
