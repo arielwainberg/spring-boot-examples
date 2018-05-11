@@ -1,8 +1,11 @@
 pipeline {
   agent any
-
+  def version() {
+    def matcher = readFile('pom.xml') =~ '<version>(\\d*)\\.(\\d*)\\.(\\d*)(-SNAPSHOT)*</version>'
+    matcher ? matcher[0] : null
+}
   stages {  
-    stage('Build-${env.BUILD_NUMBER}') {
+    stage('Build-{$matcher}') {
       steps {
         dir('spring-boot-package-war') {
           sh "pwd"
@@ -11,12 +14,12 @@ pipeline {
         }
       }   
     }
-    stage('Test-$version') {
+    stage('Test-$matcher') {
       steps {
         echo 'Testing..'
       }
     }
-    stage('deploy-$version') {
+    stage('deploy-$matcher') {
       steps {
         echo 'Deploying....'
       }
