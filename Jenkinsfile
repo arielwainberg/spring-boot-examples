@@ -1,3 +1,5 @@
+#!/usr/bin/env groovy
+
 //def version() {
 //    def matcher = readFile('pom.xml') =~ '<version>(\\d*)\\.(\\d*)\\.(\\d*)(-SNAPSHOT)*</version>'
 //    matcher ? matcher[0] : null
