@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   stages {  
-    stage('Build-${env.BUILD_NUMBER}') {
+    stage('Build') {
       steps {
         dir('spring-boot-package-war') {
           sh "pwd"
@@ -11,12 +11,12 @@ pipeline {
         }
       }   
     }
-    stage('Test-$version') {
+    stage('Test') {
       steps {
         echo 'Testing..'
       }
     }
-    stage('deploy-$version') {
+    stage('deploy') {
       steps {
         echo 'Deploying....'
       }
