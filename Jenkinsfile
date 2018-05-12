@@ -1,35 +1,31 @@
-pipeline{
-    
-    agent {
-      label 'jenkins-slave'
+pipeline {
+  agent any
+
+  stages {  
+    stage('Build') {
+      steps {
+        dir('spring-boot-package-war') {
+          sh "mvn -B versions:set -DnewVersion=${env.BUILD_NUMBER} && mvn clean package"
+        //sh "mvn --batch-mode release:update-versions -DdevelopmentVersion=1.2.0-SNAPSHOT"
+        }
+      }   
     }
 
-    stages{
-        stage('Build'){
-            steps{
-                sh "cd spring-boot-package-war && mvn -B versions:set -DnewVersion=${env.BUILD_NUMBER} &&  mvn clean package "
-            }
-	}
-	stage('Test'){
-  	    steps{ 		
-	       junit '**/target/surefire-reports/*.xml'     
- 	    }		
-	}
-	stage('Archive'){
-            steps{
-                archiveArtifacts artifacts: '**/target/*.war' 
-            }	
+    stage('Test') {
+      steps{
+        dir('spring-boot-package-war') {
+        // sh 'mvn test'
+        junit '**/target/surefire-reports/*.xml'     
         }
-    stage('Deploy'){
-        agent any
+      }
+    }
 
-        options{
-          skipDefaultCheckout()
+    stage('deploy') {
+      steps {
+        dir('spring-boot-package-war') {
+          echo 'Deploying....'
         }
-        steps{
-            sh "docker run -v ${env.JENKINS_HOME}/jobs/${env.JOB_NAME}/lastSuccessful/archive/spring-boot-package-war/target/spring-boot-package-war-${env.BUILD_NUMBER}.war:/usr/local/tomcat/webapps/spring-boot-package-war-${env.BUILD_NUMBER}.war -p 7070:8080 -d tomcat"
-        }
+      }
     }
-        
-    }
+  }
 }
