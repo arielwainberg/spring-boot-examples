@@ -14,8 +14,7 @@ pipeline {
     stage('Test') {
       steps{
         dir('spring-boot-package-war') {
-        // sh 'mvn test'
-        junit '**/target/surefire-reports/*.xml'     
+         sh 'mvn test'    
         }
       }
     }
@@ -28,4 +27,10 @@ pipeline {
       }
     }
   }
+  post {
+    always {
+      junit '**/target/surefire-reports/*.xml' 
+    }
+  }
 }
+
