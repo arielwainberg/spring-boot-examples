@@ -10,15 +10,21 @@ pipeline {
         }
       }   
     }
+
     stage('Test') {
-      steps{ 		
-        sh "echo test1"
+      steps{
+        dir('spring-boot-package-war') {
+          sh 'mvn test'
         //junit '**/target/surefire-reports/*.xml'     
- 	    }
+        }
+      }
     }
+
     stage('deploy') {
       steps {
-        echo 'Deploying....'
+        dir('spring-boot-package-war') {
+          echo 'Deploying....'
+        }
       }
     }
   }
