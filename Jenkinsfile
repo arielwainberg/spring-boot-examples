@@ -6,7 +6,7 @@ pipeline {
   //}
 
   stages {  
-    stage('Build' "${env.BUILD_NUMBER}") {
+    stage("Build-${env.BUILD_NUMBER}") {
       steps {
         dir('spring-boot-package-war') {
           sh "mvn -B versions:set -DnewVersion=${env.BUILD_NUMBER}.0-SNAPSHOT && mvn clean package"
@@ -23,7 +23,7 @@ pipeline {
 //        }
 //      }
 //    }
-    stage('Test' "${env.BUILD_NUMBER}") {
+    stage("Test-${env.BUILD_NUMBER}") {
       steps {
         dir('spring-boot-package-war') {
           script {
@@ -34,7 +34,7 @@ pipeline {
       }
     }
  
-    stage('Deploy' "${env.BUILD_NUMBER}") {
+    stage("Deploy-${env.BUILD_NUMBER}") {
       steps {
         dir('spring-boot-package-war') {
           echo 'Deploying....'
