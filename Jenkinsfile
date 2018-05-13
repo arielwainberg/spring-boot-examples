@@ -9,9 +9,11 @@ pipeline {
     stage('Build') {
       steps {
         dir('spring-boot-package-war') {
-          currentBuild.name = "MY_VERSION_NUMBER"
-          sh "mvn -B versions:set -DnewVersion=${env.BUILD_NUMBER}.0-SNAPSHOT && mvn clean package"
-          
+          script {
+            def props = readProperties  file: 'build.properties'
+            currentBuild.displayName = "v" + props['application.version']
+            sh "mvn -B versions:set -DnewVersion=${env.BUILD_NUMBER}.0-SNAPSHOT && mvn clean package"
+          }
         //sh "mvn --batch-mode release:update-versions -DdevelopmentVersion=1.2.0-SNAPSHOT"
         }
       }   
