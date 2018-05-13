@@ -4,7 +4,7 @@ pipeline {
   environment {
     VERSION = readMavenPom().getVersion()
   }
-  
+
   stages {  
     stage('Build') {
       steps {
@@ -25,7 +25,8 @@ pipeline {
     stage('Test') {
       steps {
         dir('spring-boot-package-war') {
-           currentBuild.description = "${VERSION}"
+          def pom = readMavenPom file: 'pom.xml'
+          currentBuild.description = '${VERSION}'
         }
       }
     }
