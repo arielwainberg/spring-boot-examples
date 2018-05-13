@@ -12,6 +12,7 @@ pipeline {
           script {
             sh "mvn -B versions:set -DnewVersion=1.0-SNAPSHOT-${env.BUILD_NUMBER} && mvn clean package"
             version = readMavenPom().getVersion()
+            name = readMavenPom().getName()
             currentBuild.description = "${env.JOB_NAME}-${version}"
           }
         }
