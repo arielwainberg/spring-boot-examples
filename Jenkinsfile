@@ -2,7 +2,9 @@ pipeline {
   agent any
 
   environment {
-    VERSION = readMavenPom().getVersion()
+    dir('spring-boot-package-war') {}
+      VERSION = readMavenPom().getVersion()
+    }
   }
 
   stages {  
