@@ -9,15 +9,12 @@ pipeline {
     stage('Build') {
       steps {
         dir('spring-boot-package-war') {
-          script {
-            version = readMavenPom().getVersion()
-            sh "mvn -B versions:set -DnewVersion=${version}.0.${env.BUILD_NUMBER}-SNAPSHOT && mvn clean package"
-          }
+          sh "mvn -B versions:set -DnewVersion=1.0.${env.BUILD_NUMBER}-SNAPSHOT && mvn clean package"
         }
         //sh "mvn --batch-mode release:update-versions -DdevelopmentVersion=1.2.0-SNAPSHOT"
       }
     }   
-  
+  }
 
 //    stage('Test') {
 //      steps{
