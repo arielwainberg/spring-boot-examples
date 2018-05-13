@@ -19,13 +19,11 @@ pipeline {
 //      }
 //    }
     stage('Test') {
-            def pom = readMavenPom file: 'pom.xml'
-            print "Build: " + pom.version
-            env.POM_VERSION = pom.version
-            sh 'mvn clean test -Dmaven.test.failure.ignore=true'
-            junit '**/target/surefire-reports/TEST-*.xml'
-            currentBuild.description = "v${pom.version} (${env.branch})"
-        }
+      def pom = readMavenPom file: 'pom.xml'
+      print "Build: " + pom.version
+      env.POM_VERSION = pom.version
+      currentBuild.description = "v${pom.version} (${env.branch})"
+      }
  
 
     stage('Deploy') {
