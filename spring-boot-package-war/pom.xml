@@ -52,7 +52,7 @@
 	</dependencies>
 	
 	<build>
-		<finalName>${artifactId}-${version}${build.number}</finalName>
+		<finalName>${project.name}-${project.version}-${BUILD_NUMBER}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
