@@ -2,9 +2,7 @@ pipeline {
   agent any
 
   environment {
-    dir('spring-boot-package-war') {
-      VERSION = readMavenPom().getVersion()
-    }
+      version = readMavenPom().getVersion()
   }
 
   stages {  
@@ -29,7 +27,7 @@ pipeline {
         dir('spring-boot-package-war') {
           script {
             //def pom = readMavenPom file: '/var/lib/jenkins/workspace/finalproject-01/spring-boot-package-war/pom.xml'
-            currentBuild.description = '${VERSION}'
+            currentBuild.description = '${version}'
           }
         }
       }
