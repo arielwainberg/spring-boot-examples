@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    dir('spring-boot-package-war') {}
+    dir('spring-boot-package-war') {
       VERSION = readMavenPom().getVersion()
     }
   }
