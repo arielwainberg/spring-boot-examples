@@ -26,7 +26,7 @@ pipeline {
       steps {
         dir('spring-boot-package-war') {
           script {
-            def pom = readMavenPom file: 'pom.xml'
+            def pom = readMavenPom file: '/var/lib/jenkins/workspace/finalproject-01/spring-boot-package-war/pom.xml'
             currentBuild.description = '${VERSION}'
           }
         }
