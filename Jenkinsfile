@@ -6,10 +6,11 @@ pipeline {
   //}
 
   stages {  
-    stage('Build') {
+    stage('Build' "${env.BUILD_NUMBER}") {
       steps {
         dir('spring-boot-package-war') {
           sh "mvn -B versions:set -DnewVersion=${env.BUILD_NUMBER}.0-SNAPSHOT && mvn clean package"
+          
         //sh "mvn --batch-mode release:update-versions -DdevelopmentVersion=1.2.0-SNAPSHOT"
         }
       }   
@@ -22,19 +23,18 @@ pipeline {
 //        }
 //      }
 //    }
-    stage('Test') {
+    stage('Test' "${env.BUILD_NUMBER}") {
       steps {
         dir('spring-boot-package-war') {
           script {
             version = readMavenPom().getVersion()
-            //def pom = readMavenPom file: '/var/lib/jenkins/workspace/finalproject-01/spring-boot-package-war/pom.xml'
             currentBuild.description = "${version}"
           }
         }
       }
     }
  
-    stage('Deploy') {
+    stage('Deploy' "${env.BUILD_NUMBER}") {
       steps {
         dir('spring-boot-package-war') {
           echo 'Deploying....'
