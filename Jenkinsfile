@@ -17,7 +17,7 @@ pipeline {
         //sh "mvn --batch-mode release:update-versions -DdevelopmentVersion=1.2.0-SNAPSHOT"
       }
     }   
-  }
+  
 
 //    stage('Test') {
 //      steps{
