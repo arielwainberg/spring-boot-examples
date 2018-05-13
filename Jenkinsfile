@@ -10,14 +10,14 @@ pipeline {
       steps {
         dir('spring-boot-package-war') {
           script {
-            def props = readProperties  file: 'build.properties'
-            currentBuild.displayName = props['application.version']
-            sh "mvn -B versions:set -DnewVersion=${env.BUILD_NUMBER}.0-SNAPSHOT && mvn clean package"
+            version = readMavenPom().getVersion()
+            sh "mvn -B versions:set -DnewVersion=""${version}".0."${env.BUILD_NUMBER}-SNAPSHOT && mvn clean package"
           }
-        //sh "mvn --batch-mode release:update-versions -DdevelopmentVersion=1.2.0-SNAPSHOT"
         }
-      }   
-    }
+        //sh "mvn --batch-mode release:update-versions -DdevelopmentVersion=1.2.0-SNAPSHOT"
+      }
+    }   
+  }
 
 //    stage('Test') {
 //      steps{
@@ -30,7 +30,6 @@ pipeline {
       steps {
         dir('spring-boot-package-war') {
           script {
-            version = readMavenPom().getVersion()
             currentBuild.description = "${version}"
           }
         }
