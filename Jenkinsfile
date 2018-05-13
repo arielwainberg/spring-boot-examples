@@ -29,7 +29,7 @@ pipeline {
     stage('Deploy') {
       steps {
         dir('spring-boot-package-war') {
-          sh "scp target/${name}-${version}-${BUILD_NUMBER}.war 172.16.244.141:/var/lib/tomcat7/webapps/${name}.war"
+          sh "scp target/${name}-${version}.war 172.16.244.141:/var/lib/tomcat7/webapps/${name}.war"
         }
       }
     }
