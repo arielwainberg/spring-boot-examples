@@ -12,6 +12,7 @@ pipeline {
           script {
             sh "mvn -B versions:set -DnewVersion=1.0-SNAPSHOT-${env.BUILD_NUMBER} && mvn clean package"
             version = readMavenPom().getVersion()
+            name = readMavenPom().getName()
             currentBuild.description = "${env.JOB_NAME}-${version}"
           }
         }
@@ -28,7 +29,7 @@ pipeline {
     stage('Deploy') {
       steps {
         dir('spring-boot-package-war') {
-          sh "scp target/${env.JOB_NAME}-${version}.war 172.16.244.141:/var/lib/tomcat7/webapps/"
+          sh "scp target/${name}-${version}-${BUILD_NUMBER}.war 172.16.244.141:/var/lib/tomcat7/webapps/${name}.war"
         }
       }
     }
