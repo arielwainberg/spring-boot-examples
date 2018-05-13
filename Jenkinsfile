@@ -21,12 +21,13 @@ pipeline {
 //        }
 //      }
 //    }
+// project-name-1.0-SNAPSHOT-17.war
     stage('Test') {
       steps {
         dir('spring-boot-package-war') {
           script {
             version = readMavenPom().getVersion()
-            currentBuild.description = 1.0."${version}"
+            currentBuild.description = "project-name-1.0-SNAPSHOT-${version}"
           }
         }
       }
