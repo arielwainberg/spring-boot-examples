@@ -3,7 +3,8 @@ pipeline {
 
   environment {
     VERSION = readMavenPom().getVersion()
-
+  }
+  
   stages {  
     stage('Build') {
       steps {
