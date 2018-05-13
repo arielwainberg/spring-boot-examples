@@ -1,6 +1,9 @@
 pipeline {
   agent any
 
+  environment {
+    VERSION = readMavenPom().getVersion()
+
   stages {  
     stage('Build') {
       steps {
@@ -21,10 +24,7 @@ pipeline {
     stage('Test') {
       steps {
         dir('spring-boot-package-war') {
-          def pom = readMavenPom file: 'pom.xml'
-          print "Build: " + pom.version
-          env.POM_VERSION = pom.version
-          currentBuild.description = "v${pom.version} (${env.branch})"
+           currentBuild.description = "${VERSION}"
         }
       }
     }
