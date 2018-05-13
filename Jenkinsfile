@@ -9,7 +9,11 @@ pipeline {
     stage('Build') {
       steps {
         dir('spring-boot-package-war') {
-          sh "mvn -B versions:set -DnewVersion=1.0.${env.BUILD_NUMBER}-SNAPSHOT && mvn clean package"
+          script {
+            sh "mvn -B versions:set -DnewVersion=1.0-SNAPSHOT-${env.BUILD_NUMBER} && mvn clean package"
+            version = readMavenPom().getVersion()
+            currentBuild.description = "${env.JOB_NAME}-${version}"
+          }
         }
         //sh "mvn --batch-mode release:update-versions -DdevelopmentVersion=1.2.0-SNAPSHOT"
       }
@@ -22,16 +26,16 @@ pipeline {
 //      }
 //    }
 // project-name-1.0-SNAPSHOT-17.war
-    stage('Test') {
-      steps {
-        dir('spring-boot-package-war') {
-          script {
-            version = readMavenPom().getVersion()
-            currentBuild.description = "${env.JOB_NAME}-${version}"
-          }
-        }
-      }
-    }
+
+//    stage('Version') {
+//      steps {
+//        dir('spring-boot-package-war') {
+//          script {
+//            version = readMavenPom().getVersion()
+//            currentBuild.description = "${env.JOB_NAME}-${version}"
+//          }
+//        }
+//      }
  
     stage('Deploy') {
       steps {
