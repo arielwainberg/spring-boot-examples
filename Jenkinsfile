@@ -25,8 +25,10 @@ pipeline {
     stage('Test') {
       steps {
         dir('spring-boot-package-war') {
-          def pom = readMavenPom file: 'pom.xml'
-          currentBuild.description = '${VERSION}'
+          script {
+            def pom = readMavenPom file: 'pom.xml'
+            currentBuild.description = '${VERSION}'
+          }
         }
       }
     }
