@@ -15,32 +15,20 @@ pipeline {
             currentBuild.description = "${env.JOB_NAME}-${version}"
           }
         }
-        //sh "mvn --batch-mode release:update-versions -DdevelopmentVersion=1.2.0-SNAPSHOT"
       }
     }   
-//    stage('Test') {
-//      steps{
-//        dir('spring-boot-package-war') {
-//         sh 'mvn test'    
-//        }
-//      }
-//    }
-// project-name-1.0-SNAPSHOT-17.war
+    stage('Test') {
+      steps{
+        dir('spring-boot-package-war') {
+         sh 'mvn test'    
+        }
+      }
+    }
 
-//    stage('Version') {
-//      steps {
-//        dir('spring-boot-package-war') {
-//          script {
-//            version = readMavenPom().getVersion()
-//            currentBuild.description = "${env.JOB_NAME}-${version}"
-//          }
-//        }
-//      }
- 
     stage('Deploy') {
       steps {
         dir('spring-boot-package-war') {
-          echo 'Deploying....'
+          sh "scp **/target/*.war 172.16.244.141:/var/lib/tomcat7/webapps/"
         }
       }
     }
@@ -52,4 +40,3 @@ pipeline {
     }
   }
 }
-
