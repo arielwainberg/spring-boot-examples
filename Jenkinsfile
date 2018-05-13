@@ -19,7 +19,7 @@ pipeline {
 //      }
 //    }
     stage('Test') {
-      step {
+      steps {
         def pom = readMavenPom file: 'pom.xml'
         print "Build: " + pom.version
         env.POM_VERSION = pom.version
