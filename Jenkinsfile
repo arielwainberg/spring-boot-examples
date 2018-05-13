@@ -28,7 +28,7 @@ pipeline {
           script {
             version = readMavenPom().getVersion()
             //def pom = readMavenPom file: '/var/lib/jenkins/workspace/finalproject-01/spring-boot-package-war/pom.xml'
-            currentBuild.description = ${version}
+            currentBuild.description = "${version}"
           }
         }
       }
